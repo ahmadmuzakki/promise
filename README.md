@@ -1,6 +1,7 @@
 # Promise
 
-Promise not to exceeding timeout in a context
+When you need to restrict execution time of an API you can make use of Go `context.Context` and set the timeout using `context.WithTimeout(Context,time.Duration)` but it's not very handy if you always listen to `ctx.Done()` channel everytime you need to execute function that could take long time.
+With Promise you can easily wrap the desired function to respect the deadline of the context.
 
 # Install
 `go get -u github.com/ahmadmuzakki29/promise`
@@ -21,7 +22,7 @@ func main() {
 	ctx := context.Background()
 	// timeout for the whole operation is 2 seconds
 	timeout := time.Duration(2) * time.Second
-	ctx, cancel := context.WithTimeout(ctx, timeout)
+	ctx, done := context.WithTimeout(ctx, timeout)
 
 	// return result with Do()
 	val, err := promise.Promise(ctx, dbTx).Do()
@@ -34,7 +35,7 @@ func main() {
 		fmt.Println("httpTx error:",err)
 	})
 
-	cancel()
+	done()
 }
 
 // let's say we have transaction that takes sometimes here
