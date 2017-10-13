@@ -4,7 +4,7 @@ When you need to restrict execution time of an API you can make use of Go `conte
 With Promise you can easily wrap the desired function to respect the deadline of the context.
 
 # Install
-`go get -u github.com/ahmadmuzakki29/promise`
+`go get -u github.com/ahmadmuzakki/promise`
 
 # Usage
 
