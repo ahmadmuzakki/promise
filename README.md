@@ -15,7 +15,7 @@ import (
     "time"
     "fmt"
     "context"
-    "github.com/ahmadmuzakki29/promise"
+    "github.com/ahmadmuzakki/promise"
 )
 
 func main() {
@@ -23,6 +23,7 @@ func main() {
 	// timeout for the whole operation is 2 seconds
 	timeout := time.Duration(2) * time.Second
 	ctx, done := context.WithTimeout(ctx, timeout)
+    defer done()
 
 	// return result with Do()
 	val, err := promise.Promise(ctx, dbTx).Do()
@@ -34,8 +35,6 @@ func main() {
 	},func(err error){
 		fmt.Println("httpTx error:",err)
 	})
-
-	done()
 }
 
 // let's say we have transaction that takes sometimes here
